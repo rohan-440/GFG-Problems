@@ -1,0 +1,84 @@
+/*
+Given a string, the task is to count all palindromic sub-strings present in it. Length of palindrome sub-string must be greater than or equal to 2. 
+
+Example
+
+Input
+N = 5
+str = "abaab"
+Output
+3
+Explanation:
+All palindrome substring are : "aba" , "aa" , "baab"
+Example
+
+Input
+N = 7
+str = "abbaeae"
+Output
+4
+Explanation:
+All palindrome substring are : "bb" , "abba" ,"aea",
+"eae"
+Expected Time Complexity : O(|S|2)
+Expected Auxilliary Space : O(|S|2)
+
+Constraints:
+
+2<=|S|<=500
+*/
+
+
+
+
+
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+int CountPS(char S[], int N);
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int N;
+        cin>>N;
+        char S[N+1];
+        cin>>S;
+        cout<<CountPS(S,N)<<endl;
+    }
+    return 0;
+}
+
+
+// } Driver Code Ends
+
+
+int CountPS(char S[], int N)
+{ 
+    vector<vector<bool>> dp(N,vector<bool>(N,false));
+    int count = 0;
+    for(int diff = 0 ; diff < N; diff++){
+        for(int i = 0 , j = diff; j < N; j++,i++){
+            if(diff == 0)
+            dp[i][j] = true;
+            else if(diff == 1){
+                 if(S[i] == S[j])
+                 dp[i][j] = true;
+             }
+             else {
+                 if(S[i] == S[j])
+                 dp[i][j] = dp[i+1][j-1];
+             }
+             if(dp[i][j])
+             count++;
+            
+        }
+
+   }
+ return count-N;    
+    
+}
