@@ -1,0 +1,111 @@
+/*
+Given an array of integers arr, length of the array  N and an integer K, find all the unique combinations in arr where the sum of the combination is equal to K. Each number can only be used once in a combination.
+
+Example 1:
+
+Input: 
+N = 5, K = 7
+arr[] = { 1, 2, 3, 3, 5 }
+Output:
+{ { 1, 3, 3 }, { 2, 5 } }
+Explanation:
+1 + 3 + 3 = 7
+2 + 5 = 7
+Example 2:
+
+Input:
+N = 6, K = 35
+arr[] = { 5, 10, 15, 20, 25, 30 }
+Output:
+{ { 5,10, 20 }, { 5, 30 }, { 10, 25 }, { 15, 20 } }
+Explanation:
+5 + 10 + 20 = 35
+5 + 30 = 35
+10 + 25 = 35
+15 + 20 = 35
+Constraints:
+
+1 <= N <= 100
+
+1 <= arr[i] <= 50
+
+1 <= K <= 30
+
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function CombinationSum2() which takes arr[] ,n and k as input parameters and returns all the unique combinations.
+
+Expected Time Complexity: O(K * 2N)
+Expected Auxiliary Space: O(N)
+*/
+
+
+
+//{ Driver Code Starts
+//Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+//User function Template for C++
+
+class Solution{
+public:
+    void func(vector<int>& arr,int i, int k, vector <int> &temp,vector<vector<int>> &ans){
+          if(k == 0){
+            ans.push_back(temp);
+            return ;
+          }
+        for(int ind = i ; ind < arr.size() ; ind++){
+        if(ind > i && arr[ind] == arr[ind-1]) continue ;
+        if(arr[ind] > k) break;
+        temp.push_back(arr[ind]);
+       func(arr,ind+1,k-arr[ind],temp,ans);
+        temp.pop_back();
+        }
+    }
+    
+
+    vector<vector<int>> CombinationSum2(vector<int> arr,int n,int k)
+    {
+        //code here
+        vector<int> temp;
+        vector<vector<int>> ans;
+        sort(arr.begin(),arr.end());
+        int i = 0 ;
+        func(arr,i,k,temp,ans);
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n,k;
+        cin>>n>>k;
+        vector<int> arr(n);
+        for(int i=0;i<n;i++)
+        {
+            cin>>arr[i];
+        }
+        Solution ob;
+        auto obj=ob.CombinationSum2(arr,n,k);
+        for(int i=0;i<obj.size();i++)
+        {
+            for(int j=0;j<obj[i].size();j++)
+            {
+                cout<<obj[i][j]<<" ";
+            }
+            cout<<"\n";
+        }
+        if(obj.size()==0) cout<<"\n";
+    }
+    return 0;
+}
+// } Driver Code Ends
