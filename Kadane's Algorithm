@@ -25,7 +25,8 @@ Max subarray sum is -1
 of element (-1)
 
 Your Task:
-You don't need to read input or print anything. The task is to complete the function maxSubarraySum() which takes Arr[] and N as input parameters and returns the sum of subarray with maximum sum.
+You don't need to read input or print anything. The task is to complete the function maxSubarraySum()
+which takes Arr[] and N as input parameters and returns the sum of subarray with maximum sum.
 
 
 Expected Time Complexity: O(N)
@@ -52,24 +53,18 @@ class Solution{
     //Function to find the sum of contiguous subarray with maximum sum.
     long long maxSubarraySum(int arr[], int n){
        
-       long long max_so_far = INT_MIN;
-        long long max_end = 0;
-        int start = 0 ,s = 0,end = 0;
-        for(int i = 0; i < n;i++){
-            max_end+=arr[i];
-            
-            if(max_so_far < max_end){
-                max_so_far = max_end;
-                start = s;
-                end = i;
-                
-            }
-            if(max_end < 0){
-                max_end = 0;
-                s = i+1;
-            }
-        }
-        return max_so_far;
+       long long currsum = 0 ;
+       long long maxsum = INT_MIN;
+       for(int i = 0 ; i < n;i++){
+           currsum+=arr[i];
+           if(currsum < arr[i]){
+               currsum = arr[i];
+           }
+           if(maxsum < currsum){
+               maxsum = currsum;
+           }
+       }
+       return maxsum;
         
     }
 };
