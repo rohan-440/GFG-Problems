@@ -1,0 +1,137 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Minimum number of deletions and insertions.
+EasyAccuracy: 65.29%Submissions: 32K+Points: 2
+Lamp
+Unable to Crack Interviews of Your Dream Companies ? Click Here to End This Problem!
+
+Given two strings str1 and str2. The task is to remove or insert the minimum number of characters from/in str1 so as to transform it into str2. It could be possible that the same character needs to be removed/deleted from one point of str1 and inserted to some another point.
+
+Example 1:
+
+Input: str1 = "heap", str2 = "pea"
+Output: 3
+Explanation: 2 deletions and 1 insertion
+p and h deleted from heap. Then, p is 
+inserted at the beginning One thing to 
+note, though p was required yet it was 
+removed/deleted first from its position 
+and then it is inserted to some other 
+position. Thus, p contributes one to the 
+deletion_count and one to the 
+insertion_count.
+Example 2:
+
+Input : str1 = "geeksforgeeks"
+str2 = "geeks"
+Output: 8
+Explanation: 8 deletions
+ 
+
+Your Task:
+You don't need to read or print anything. Your task is to complete the function minOperations() which takes both strings as input parameter and returns the minimum number of operation required.
+
+Expected Time Complexity: O(|str1|*|str2|)
+Expected Space Complexity: O(|str1|*|str2|)
+
+Constraints:
+1 ≤ |str1|, |str2| ≤ 1000
+All the characters are lower case English alphabets
+
+
+
+
+
+
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution{
+		
+
+	public:
+	int f(int i , int  j , string str1,string str2,vector<vector<int>> &dp){
+	    if(i < 0 || j < 0){
+	        return 0;
+	    }
+	    if(dp[i][j] != -1){
+	        return dp[i][j];
+	    }
+	    if(str1[i] == str2[j]){
+	        return 1+f(i-1,j-1,str1,str2,dp);
+	    }
+	    return dp[i][j] = max(f(i-1,j,str1,str2,dp),f(i,j-1,str1,str2,dp));
+	}
+	int minOperations(string str1, string str2) 
+	{ 
+	    int n = str1.size();
+	    int m = str2.size();
+	    vector<vector<int>> dp(n+1,vector<int> (m+1,-1));
+	    return (n+m)-(2*f(n-1,m-1,str1,str2,dp));
+	    
+	} 
+};
+
+//{ Driver Code Starts.
+int main() 
+{
+   	
+   
+   	int t;
+    cin >> t;
+    while (t--)
+    {
+        string s1, s2;
+        cin >> s1 >> s2;
+
+	    Solution ob;
+	    cout << ob.minOperations(s1, s2) << "\n";
+	     
+    }
+    return 0;
+}
+
+
+// } Driver Code Ends
