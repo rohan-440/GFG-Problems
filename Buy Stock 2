@@ -1,0 +1,79 @@
+You are given the prices of stock for n number of days. every ith day tell the price of the stock on that day.find the maximum profit 
+that you can make by buying and selling stock any number of times as you can't proceed with other transactions if you hold any transaction.
+
+Example:
+
+Input:
+n = 7
+prices = [1,2,3,4,5,6,7]
+Output:
+6
+Explaination:
+We can make the maximum profit by buying the stock on the first day and selling it on the last day.
+Your Task:
+You don't have to read input or print anything. Your task is to complete the function maximizeProfit()
+which takes the integer n and array prices and returns the maximum profit that can earn.
+
+Expected Time Complexity: O(n)
+Expected Space Complexity: O(n2)
+NOTE: can you solve this in less space complexity?
+
+Constraint:
+1<=n<=105
+1<=prices[i]<=105
+
+
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution{
+    public:
+
+    long long maximumProfit(vector<long long>&prices, int n) {
+        vector<vector<long long>> dp(n+1,vector<long long>(2,0));
+       dp[n][0] = dp[n][1] = 0;
+       
+        for(int i = n-1; i >= 0; i--){
+            for(int buy = 0 ; buy < 2;buy++){
+        if(buy == 1){
+            dp[i][buy] =  max(-prices[i]+dp[i+1][0],0+dp[i+1][1]);
+        }
+        else {
+            dp[i][buy] = max(prices[i]+dp[i+1][1],0+dp[i+1][0]);
+        }
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        return dp[0][1];
+    }
+};
+
+//{ Driver Code Starts.
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--){
+        int n; cin>>n;
+        vector<long long> prices;
+        
+        for(int i=0; i<n; ++i){
+            long long x; cin>>x;
+            prices.push_back(x);
+        }
+        
+        Solution obj;
+        cout<<obj.maximumProfit(prices, n)<<"\n";
+    }
+    return 0;
+}
+// } Driver Code Ends
